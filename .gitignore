@@ -1,0 +1,39 @@
+# data
+**/*.avi
+**/*.asc
+**/*.mat
+**/*.csv
+**/*.pkl
+**/*.xml
+**/*.vtu
+**/*.msh
+**/*.zip
+**/*.dat
+
+# CAD
+**/*.ipt
+**/*.stl
+**/*.3mf
+
+# notes
+**/*.pptx
+**/*.docx
+**/*.xlsx
+
+# figures
+**/*.jpg
+**/*.jpeg
+**/*.png
+**/*.eps
+**/*.tif
+**/*.mp4
+
+# LaTeX temporary files
+**/*.aux
+**/*.log
+**/*.toc
+**/*.pdf
+**/*.synctex.gz
+**/*.bbl
+**/*.blg
+**/*.out
