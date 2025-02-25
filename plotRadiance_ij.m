@@ -1,5 +1,5 @@
-% plotRadiance Plots measured debayered signal and spectral radiance at
-% location spectrum_xy. It also plots the fitted blackbody spectrum
+% plotRadiance_ij Plots measured debayered signal and spectral radiance at
+% index spectrum_ij. It also plots the fitted blackbody spectrum
 % obtained by a temperature estimation method.
 %
 % Inputs:

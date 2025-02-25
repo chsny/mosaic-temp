@@ -11,8 +11,8 @@ exposure = 200; % us
 bitlength = 12;
 head = "precitec";
 
-filenames = ["587/445507.tif"];%["780/77700.tif"]; %, "780/77701.tif"];
-raw_frames = readImages(fullfile(data_folder, filenames), bitlength);
+filename = "587/445507.tif"; %"780/77700.tif"; %"780/77701.tif";
+raw_frames = readImages(fullfile(data_folder, filename), bitlength);
 clipped_frames = clipFrames(raw_frames);
 interpolate = 0;
 sort_wl = true;
@@ -27,38 +27,56 @@ close all
 i = round(162/5); % image is not interpolated so index is divided by a macropixel width
 j = round(207/5);
 
-figure
+f = figure;
+f.Units = "centimeters";
+f.Position(3:4) = [10 8];
 plotRadiance_ij(wl_peak_sorted(i_wl), deb_frames(:,:,i_wl), L, T, emissivity, [i j])
-
+exportgraphics(gcf,'./figures/radianceplot_precitec.png','Resolution',300)
 
 %% Plot of temperature estimation for Precitec, 12 bits image
 close all
-for i=1:length(filenames)
-    figure
-    t = tiledlayout(2,2);
-    title(t, filenames(i))
 
-    nexttile
-    imagesc(raw_frames(:,:,i))
-    title("Raw hyperspectral image")
+% Plot 1: temperature distribution
+f = figure;
+f.Units = "centimeters";
+f.Position(3:4) = [9 6];
+plotTemp_ij(T);
+exportgraphics(gcf,'./figures/tempplot_precitec.png','Resolution',300)
 
-    nexttile
-    imagesc(T(:,:,i));
-    title("Temperature")
-    clim([1500 3000])
-    colorbar
 
-    nexttile
-    imagesc(emissivity(:,:,i))
-    title("Emissivity")
-    clim([0 1])
-    colorbar
+% Plot 2: tiled plots
+imAlpha=ones(size(T));
+imAlpha(isnan(T))=0;
 
-    nexttile
-    imagesc(err(:,:,i))
-    title("Least square fitting error")
-    colorbar
-end
+f = figure;
+f.Units = "centimeters";
+f.Position(3:4) = [12 9];
+tiledlayout(2,2);
+
+nexttile
+imagesc(raw_frames)
+axis image
+title("Raw hyperspectral image")
+colorbar
+
+nexttile
+plotTemp_ij(T);
+title("Temperature")
+
+nexttile
+imagesc(emissivity, 'AlphaData',imAlpha)
+axis image
+title("Emissivity")
+clim([0 1])
+colorbar
+
+nexttile
+imagesc(err, 'AlphaData',imAlpha)
+axis image
+title("Least square fitting error")
+colorbar
+
+exportgraphics(gcf,'./figures/fullplot_precitec.png','Resolution',300)
 
 %% HIGHYAG, 8 BITS IMAGE (2021)
 head = "highyag";
@@ -77,35 +95,45 @@ deb_frame = debayer(clipped_frames, interpolate, sort_wl);
 %% Temperature plot for highyag, 8 bits image
 close all
 
+% Plot 1: temperature distribution
+figure
+plotTemp_ij(T);
+
+% Plot 2: tiled plots
+imAlpha=ones(size(T));
+imAlpha(isnan(T))=0;
+
 figure
 t = tiledlayout(2,2);
-title(t, "410 (8 bits, highyag head)")
 
 nexttile
-imagesc(clipped_frames)
+imagesc(raw_frames);
+axis image
 title("Raw hyperspectral image")
-
-nexttile
-imagesc(T);
 colorbar
 
 nexttile
-imagesc(emissivity)
+plotTemp_ij(T);
+title("Temperature")
+
+nexttile
+imagesc(emissivity, 'AlphaData',imAlpha);
+axis image
 title("Emissivity")
+clim([0 1])
 colorbar
 
 nexttile
-imagesc(err)
+imagesc(err, 'AlphaData',imAlpha);
+axis image
 title("Least square fitting error")
 colorbar
 
 %% Radiance plot for highyag, 8 bits image
 close all
 
-x = 0; % um
-y = 0;
+x = 34; 
+y = 29;
 
 figure
-plotRadiance(wl_peak_sorted(i_wl), deb_frame(:,:,i_wl), L, T, emissivity, [x y])
-title("410 (8 bits, highyag head)")
-
+plotRadiance_ij(wl_peak_sorted(i_wl), deb_frame(:,:,i_wl), L, T, emissivity, [x y])
