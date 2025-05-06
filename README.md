@@ -32,7 +32,8 @@ The code uses the following structure (see `main.m` for examples):
 
 If you use this software, please cite:
 
-1. The software: [DOI link from Zenodo]
+1. The software: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15350256.svg)](https://doi.org/10.5281/zenodo.15350256)
+
 2. The accompanying PhD thesis: Snyers, Charles. *Machine Learning-Based Process Optimization Using Hyperspectral Imaging in Directed Energy Deposition.* Vrije Universiteit Brussel, 2024. https://researchportal.vub.be/en/publications/machine-learning-based-process-optimization-using-hyperspectral-i
 
 ## License

@@ -11,6 +11,9 @@ authors:
     email: charles.snyers@protonmail.com
     affiliation: Vrije Universiteit Brussel
     orcid: 'https://orcid.org/0000-0001-8737-8775'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.15350255
 repository-code: 'https://github.com/chsny/mosaic-temp'
 abstract: Hyperspectral Temperature Estimation with Mosaic Camera.
 keywords:
