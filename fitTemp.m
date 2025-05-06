@@ -94,25 +94,23 @@ end
 end
 
 function [T_loc, emissivity_loc, err_loc] = fitTempLocal(wl, L_loc, wl_ref, L_ref)
-% fitTempLocal simplified multi-color pyrometry
+% Multicolor pyrometry with grey body hypothesis
 T0 = 1670;
 T_lb = 900;
 T_ub = 3500;
-error = @(T) abs(L_loc/L_ref - blackbody(wl,T)/blackbody(wl_ref,T));
-options = optimoptions('lsqnonlin', 'Algorithm','levenberg-marquardt', 'Display', 'off');
-[T_loc, err_loc] = lsqnonlin(error, T0, T_lb, T_ub, options);
-emissivity_loc = L_ref / blackbody(wl_ref,T_loc);
-end
+fun_error = @(T) abs(L_loc/L_ref - blackbody(wl,T)/blackbody(wl_ref,T));
 
-% function [T_loc, emissivity_loc, err_loc] = fitTempLocal2(wl_loc, L_loc, sigma_L_loc)
-% % fitTempLocal General method
+% % Multicolor pyrometry with linear emissivity
 % emissivity = @(wl,A,B) A - B*wl; 
 % fun_error = @(x) (L_loc - emissivity(wl_loc, x(2), x(3)).*blackbody(wl_loc,x(1)))./sqrt(sigma_L_loc);
-% T0 = 900;
+% T0 = 1670;
 % A0 = 0.3;
 % B0 = 0;
 % x0 = [T0 A0 B0];
-% %options = optimset('MaxIter', 140);
-% [T_loc, err_loc] = lsqnonlin(fun_error, x0);
-% emissivity_loc = L_ref / blackbody(wl_ref,T_loc);
-% end
+% lb = [900 0 0];
+% ub = [3500 1 1/1000]
+
+options = optimoptions('lsqnonlin', 'Algorithm','levenberg-marquardt', 'Display', 'off');
+[T_loc, err_loc] = lsqnonlin(fun_error, T0, T_lb, T_ub, options); % lsqnonlin minimizes fun_error^2
+emissivity_loc = L_ref / blackbody(wl_ref,T_loc);
+end

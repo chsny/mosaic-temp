@@ -1,0 +1,20 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: mosaic-temp
+message: 'If you use this software, please cite it as below.'
+type: software
+authors:
+  - given-names: Charles
+    family-names: Snyers
+    email: charles.snyers@protonmail.com
+    affiliation: Vrije Universiteit Brussel
+    orcid: 'https://orcid.org/0000-0001-8737-8775'
+repository-code: 'https://github.com/chsny/mosaic-temp'
+abstract: Hyperspectral Temperature Estimation with Mosaic Camera.
+keywords:
+  - hyperspectral imaging
+  - temperature estimation
+  - multicolor pyrometry
+license: MIT

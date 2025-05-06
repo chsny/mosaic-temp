@@ -31,7 +31,7 @@ f = figure;
 f.Units = "centimeters";
 f.Position(3:4) = [10 8];
 plotRadiance_ij(wl_peak_sorted(i_wl), deb_frames(:,:,i_wl), L, T, emissivity, [i j])
-exportgraphics(gcf,'./figures/radianceplot_precitec.png','Resolution',300)
+% exportgraphics(gcf,'./figures/radianceplot_precitec.png','Resolution',300)
 
 %% Plot of temperature estimation for Precitec, 12 bits image
 close all
@@ -41,7 +41,7 @@ f = figure;
 f.Units = "centimeters";
 f.Position(3:4) = [9 6];
 plotTemp_ij(T);
-exportgraphics(gcf,'./figures/tempplot_precitec.png','Resolution',300)
+% exportgraphics(gcf,'./figures/tempplot_precitec.png','Resolution',300)
 
 
 % Plot 2: tiled plots
@@ -76,7 +76,7 @@ axis image
 title("Least square fitting error")
 colorbar
 
-exportgraphics(gcf,'./figures/fullplot_precitec.png','Resolution',300)
+% exportgraphics(gcf,'./figures/fullplot_precitec.png','Resolution',300)
 
 %% HIGHYAG, 8 BITS IMAGE (2021)
 head = "highyag";
@@ -91,6 +91,15 @@ sort_wl = true;
 deb_frame = debayer(clipped_frames, interpolate, sort_wl);
 
 [i_wl, L, T, emissivity, err] = fitTemp(deb_frame, exposure, bitlength, head);
+
+%% Radiance plot for highyag, 8 bits image
+close all
+
+x = 34; 
+y = 29;
+
+figure
+plotRadiance_ij(wl_peak_sorted(i_wl), deb_frame(:,:,i_wl), L, T, emissivity, [x y])
 
 %% Temperature plot for highyag, 8 bits image
 close all
@@ -128,12 +137,3 @@ imagesc(err, 'AlphaData',imAlpha);
 axis image
 title("Least square fitting error")
 colorbar
-
-%% Radiance plot for highyag, 8 bits image
-close all
-
-x = 34; 
-y = 29;
-
-figure
-plotRadiance_ij(wl_peak_sorted(i_wl), deb_frame(:,:,i_wl), L, T, emissivity, [x y])
